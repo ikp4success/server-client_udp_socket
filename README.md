@@ -124,3 +124,8 @@ Create a folder with the name of your assigned group name, e.g., Group_A.
 Copy all source code files/directories into the created folder.
 Make sure you have sshed to grail.cba.csuohio.edu, and go to the parent directory of Group_A, then type:
 $ turnin -c cis340w -p proj4 Group_A
+
+
+EXISTING BUGS
+------------------
+Because of time constraints,the shell unfortunately, cannot check to see if one client is connected to enable disabling of multiple client connections.
