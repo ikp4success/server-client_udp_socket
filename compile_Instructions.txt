@@ -1,0 +1,318 @@
+(3) COMPILING INSTRUCTION
+--------------------------
+Compilation Description:
+
+Server side
+$> make
+$> ./server imagefile.img
+
+
+Client Side
+$> ./client
+$>client: fmount localhost
+
+
+(4) SAMPLE TEST RUN
+--------------------
+The following console output shows how to run the program.
+----------------------------------------------------------------------------
+Compilation:
+Server side output
+ikp4success@ikp4success-X501A1:~/Documents/CIS340Two/Assignment4/Actual2$ make
+gcc -o client client.c minsc.h Fat12BootEntry.h flopCommands.c Fat12BootEntry.c -std=gnu99 -g -I.
+gcc -o server server.c Fat12BootEntry.h Fat12BootEntry.c -std=gnu99 -g -I.
+
+
+ikp4success@ikp4success-X501A1:~/Documents/CIS340Two/Assignment4/Actual2$ ./server imagefile.img 
+ImageFile--  imagefile.img
+Port Number--  13114
+Connected Server
+
+
+client side output
+ikp4success@ikp4success-X501A1:~/Documents/CIS340Two/Assignment4/Actual2$ ./client 
+Port Number--  13114
+Connected Client to Server
+[Client:]$ 
+
+
+***********Mounting to [localhost]*
+client side output
+
+[Client:]$ fmount localhost
+Attempting to Connect...
+Found `localhost
+`... Connected Succesfully
+[Client:]$ 
+
+server side output after fmount localhost
+
+127.0.0.1:53938 >>> fmount 0
+Mounted imagefile.img
+127.0.0.1:53938 <<< �<�mkdosfs
+127.0.0.1:53938 >>> fmount 19
+Mounted imagefile.img
+127.0.0.1:53938 <<< AA
+127.0.0.1:53938 >>> fmount 20
+Mounted imagefile.img
+127.0.0.1:53938 <<< AC
+127.0.0.1:53938 >>> fmount 21
+Mounted imagefile.img
+127.0.0.1:53938 <<< As
+127.0.0.1:53938 >>> fmount 22
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 23
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 24
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 25
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 26
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 27
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 28
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 29
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 30
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 31
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+127.0.0.1:53938 >>> fmount 32
+Mounted imagefile.img
+127.0.0.1:53938 <<< 
+
+
+
+Help command:
+
+[Client:]$ help
+Here are some commands supported by the floppy console:
+  fmount : fmount floppy in server
+    Example:'fmount [hostname]'
+  fumount: Unmounts the floppy images.
+     Example: 'fumount'
+  structure: Lists the structure of the floppy disk.
+  traverse: Shows contents with root directory.
+     Example: 'traverse [-l]'
+  showfat: Show FAT tables.
+     Example: 'showfat'
+  showsector: Shows the contents of a sector.
+              Add '> [file]' to create file and save sector info.
+     Example: 'showsector [number]'
+              'showsector [number] > [file]'
+  help: Shows commands.
+     Example: 'help'
+  exit: Exits the floppy program.
+     Example: 'exit'
+
+$ 
+
+
+
+fumount command:
+
+[Client:]$  fumount in client
+server side display
+    umount remote floppy from 127.0.0.1:53938 [180805043]
+127.0.0.1:53938 <<< 
+$ 
+
+structure command:
+
+[Client:]$ structure
+
+        number of FAT:                      2
+        number of sectors used by FAT:      9
+        number of sectors per cluster:      1
+        number of ROOT Entries:             224
+        number of bytes per sector          512
+$ 
+
+structure -l command:
+
+[Client:]$ structure -l
+        number of FAT:                      2
+        number of sectors used by FAT:      9
+        number of sectors per cluster:      1
+        number of ROOT Entries:             224
+        number of bytes per sector          512
+        ---Sector #---      ---Sector Types---
+             0                    BOOT
+          01 -- 09                FAT0
+          10 -- 18                FAT1
+          18 -- 32                ROOT DIRECTORY
+$ 
+
+[Client:]$ traverse
+/A       .CLA
+/ALOOP1  .CLA
+/ALOOP1  .JAV
+/ALOOP2  .CLA
+/ALOOP2  .JAV
+/ALOOP3  .CLA
+/ALOOP3  .JAV
+/B       .CLA
+/CONDIT  .CLA
+/CONDIT  .JAV
+/D       .CLA
+/DEMO    .CLA
+/DEMO    .JAV
+/DIR1                           < DIR >
+/DIR1    /.                     < DIR >
+/DIR1    /..                    < DIR >
+/POLYTEST.CLA
+/POLYTEST.JAV
+/SOME    .CLA
+/�OME~1  .JAV
+
+
+traverse -l command:
+
+[Client:]$ traverse -l
+    *****************************
+    ** FILE ATTRIBUTE NOTATION **
+    **                         **
+    ** R ------ READ ONLY FILE **
+    ** S ------ SYSTEM FILE    **
+    ** H ------ HIDDEN FILE    **
+    ** A ------ ARCHIVE FILE   **
+    *****************************
+
+-----A    17755 27045       670      /A       .CLA                 3
+-----A    17755 27045       763      /ALOOP1  .CLA                 5
+-----A    17755 27045       333      /ALOOP1  .JAV                 7
+-----A    17755 27045       786      /ALOOP2  .CLA                 8
+-----A    17755 27045       404      /ALOOP2  .JAV                 10
+-----A    17755 27045       786      /ALOOP3  .CLA                 11
+-----A    17755 27045       408      /ALOOP3  .JAV                 13
+-----A    17755 27045       358      /B       .CLA                 14
+-----A    17755 27045       1067      /CONDIT  .CLA                 15
+-----A    17755 27045       444      /CONDIT  .JAV                 18
+-----A    17755 27045       508      /D       .CLA                 19
+-----A    17755 27045       967      /DEMO    .CLA                 20
+-----A    17755 27045       648      /DEMO    .JAV                 22
+------    17755 27045       < DIR >      /DIR1                     24
+------    17755 27045       < DIR >      /DIR1    /.                 24
+------    17755 27045       < DIR >      /DIR1    /..                 0
+-----A    17755 27045       630      /POLYTEST.CLA                 28
+-----A    17755 27045       1063      /POLYTEST.JAV                 30
+-----A    17755 27045       226      /SOME    .CLA                 33
+-----A    17755 27045       278      /�OME~1  .JAV                 34
+
+
+
+
+showsector <num> command:
+
+[Client:]$ showsector 10
+        0    1    2    3    4    5    6    7    8    9    a    b    c    d    e    f
+
+   0   f0   ff   ff    0   40    0   ff   6f    0   ff   ff   ff    9   f0   ff   ff
+  10   cf    0   ff   ff   ff   ff    f    1   11   f0   ff   ff   ff   ff   15   f0
+  20   ff   17   f0   ff   ff   ff   ff   ff   ff   ff   1d   f0   ff   1f    0    2
+  30   ff   ff   ff    0    0    0    0    0    0    0    0    0    0    0    0    0
+  40    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  50    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  60    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  70    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  80    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  90    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  a0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  b0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  c0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  d0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  e0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+  f0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 100    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 110    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 120    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 130    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 140    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 150    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 160    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 170    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 180    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 190    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 1a0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 1b0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 1c0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 1d0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 1e0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+ 1f0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+
+[Client:]$ showfat
+        0    1    2    3    4    5    6    7    8    9    a    b    c    d    e    f
+
+   0   f0   ff   ff FREE   40 FREE   ff   6f FREE   ff   ff   ff    9   f0   ff   ff
+  10   cf FREE   ff   ff   ff   ff    f    1   11   f0   ff   ff   ff   ff   15   f0
+  20   ff   17   f0   ff   ff   ff   ff   ff   ff   ff   1d   f0   ff   1f FREE    2
+  30   ff   ff   ff FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  40 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  50 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  60 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  70 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  80 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  90 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  a0 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  b0 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  c0 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  d0 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  e0 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+  f0 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+ 100 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+ 110 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+ 120 FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE FREE
+-------->>
+
+
+
+
+
+
+quit command:
+[Client:]$ quit
+Quitting flopp shell.......
+
+
+****Notes
+TO quit the server shell remotely from client, you must fmount [localhost] on client shell, then type quit command.
+
+
+
+
+----------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
