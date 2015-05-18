@@ -1,5 +1,7 @@
 # server-client_udp_socket
-nix shell server/client, to allow user access floopy image from client shell
+Unix shell server/client, to allow user access floopy image from client shell
+
+
 CIS340 Systems programing--Cleveland State University Computer Science
 Project4: A Remote Floppy Disk Shell (Due at 11:59:59pm on 05/08/2015 (EST))
 
